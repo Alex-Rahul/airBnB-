@@ -1,0 +1,78 @@
+<%- include('../partials/head') %>
+</head>
+<body>
+  <%- include('../partials/nav') %>
+
+  <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-6xl">
+    <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
+      Home List
+    </h2>
+
+    <div class="flex flex-wrap justify-center gap-6">
+
+      <% if (registeredHomes && registeredHomes.length > 0) { %>
+
+        <% registeredHomes.forEach(home => { %>
+
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 w-64">
+
+            <!-- IMAGE -->
+            <img src="<%= home.photoUrl %>" 
+                 alt="<%= home.houseName %>" 
+                 class="w-full h-48 object-cover">
+
+            <div class="p-4">
+
+              <!-- NAME -->
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                <%= home.houseName %>
+              </h3>
+
+              <!-- LOCATION -->
+              <p class="text-gray-600 mb-2">
+                📍 <%= home.location %>
+              </p>
+
+              <!-- PRICE + RATING -->
+              <div class="flex justify-between items-center mb-3">
+
+                <span class="text-lg font-bold text-red-500">
+                  ₹ <%= home.price %> / night
+                </span>
+
+                <span class="text-gray-700">
+                  ⭐ <%= home.rating %>
+                </span>
+              </div>
+
+              <!-- DETAILS BUTTON -->
+              <a href="/homes/<%= home._id %>" 
+                 class="block text-center bg-blue-500 text-white py-1 rounded mb-1 hover:bg-blue-600 transition">
+                 Details
+              </a>
+
+              <!-- ✅ ADD TO FAVOURITE (IMPORTANT FIX) -->
+              <form action="/favourites/add" method="POST">
+                <input type="hidden" name="homeId" value="<%= home._id %>">
+                <button class="w-full bg-red-500 text-white py-1 rounded mb-1 hover:bg-red-600 transition">
+                  Favourites
+                </button>
+              </form>
+
+            </div>
+          </div>
+
+        <% }) %>
+
+      <% } else { %>
+
+        <p class="text-center text-gray-500 text-lg">
+          No homes available
+        </p>
+
+      <% } %>
+
+    </div>
+  </main>
+</body>
+</html>
